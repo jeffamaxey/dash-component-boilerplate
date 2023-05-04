@@ -26,10 +26,7 @@ def package_check(s):
 
 def _check_specials_characters(s):
     i = ord(s)
-    if i == 95:
-        # Allow for `_`
-        return False
-    return not 96 < i < 123
+    return False if i == 95 else not 96 < i < 123
 
 
 def check_specials_characters(s):

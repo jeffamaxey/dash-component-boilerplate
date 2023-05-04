@@ -22,14 +22,13 @@ else:
 def _execute_command(cmd):
     line = shlex.split(cmd, posix=not is_windows)
 
-    print('Executing: {}'.format(cmd))
+    print(f'Executing: {cmd}')
 
     # call instead of Popen to get realtime output
     status = subprocess.call(line, shell=is_windows)
 
     if status != 0:
-        print('post_gen_project command failed: {}'.format(cmd),
-              file=sys.stderr)
+        print(f'post_gen_project command failed: {cmd}', file=sys.stderr)
         sys.exit(status)
 
     return status
@@ -60,7 +59,7 @@ if install_deps != 'True':
 
 # Create a virtual env
 if sys.version.split(' ')[0] > '3.2':
-    venv = '{} -m venv venv'.format(sys.executable)
+    venv = f'{sys.executable} -m venv venv'
 else:
     venv = 'virtualenv venv'
 
@@ -80,9 +79,7 @@ except BaseException:
 print('\n\nInstalling dependencies\n', file=sys.stderr)
 
 # Install Python requirements.
-_execute_command(
-    r'{} -m pip install -r requirements.txt'.format(python_executable)
-)
+_execute_command(f'{python_executable} -m pip install -r requirements.txt')
 
 # Install node_modules
 _execute_command('npm install --ignore-scripts')
@@ -106,7 +103,7 @@ _execute_command("{} -m dash.development.component_generator"
                  " --r-prefix '{{ cookiecutter.r_prefix }}'"
                  .format(python_executable))
 
-print('\n{} ready!\n'.format(project_shortname))
+print(f'\n{project_shortname} ready!\n')
 
 
 sys.exit(0)
